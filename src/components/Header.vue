@@ -9,7 +9,7 @@
       <ul>
         <li>Home</li>
         <li>Notícias</li>
-        <li>Sobre</li>
+        <li>Sobre Nós</li>
       </ul>
       </v-toolbar>
       <v-spacer></v-spacer>
