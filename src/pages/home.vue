@@ -2,24 +2,21 @@
   <v-app>
       <Header/>
     <v-main>
-      <HelloWorld/>
-      <HelloWorld/>
-      <HelloWorld/>
+      <Cards/>        
     </v-main>
   </v-app>
 </template>
 
 <script>
 import Header from '@/components/Header';
-
-import HelloWorld from '@/components/HelloWorld';
+import Cards from "@/components/Cards"
 
 export default {
   name: 'App',
 
   components: {    
     Header,
-    HelloWorld,
+    Cards,
 
   },
 
