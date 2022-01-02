@@ -1,7 +1,7 @@
 <template>
     <div class="cards-jogos d-flex justify-center mt-4 mb-4">
         <v-row class="v-linha d-flex flex-nowrap ">
-            <v-col class="px-0">
+            <v-col class="pl-16">
                 <v-card class="d-flex pa-2 mx-6 lol rounded " min-width="201.60" max-width="fit-content" max-height="41" outlined tile dark >
                 <a class="linkJogos" @click="$vuetify.goTo('#lol', easeOutCubic)">
                     <v-img max-width="25" src="@/assets/images/cardLOL.jpg" class="mr-2"></v-img>
