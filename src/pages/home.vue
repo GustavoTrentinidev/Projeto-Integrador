@@ -8,6 +8,7 @@
       <valorant class="pt-5 pb-16" id="valorant" />
       <wild class="pt-5 pb-16" id="wr" />
       <TFT class="pt-5 pb-16" id="tft" />
+      <Nav/>
     </v-main>
   </v-app>
 </template>
@@ -30,7 +31,7 @@ export default {
     League,
     Valorant,
     Wild,
-    TFT
+    TFT,
   },
 
   data: () => ({

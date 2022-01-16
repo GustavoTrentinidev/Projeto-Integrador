@@ -3,9 +3,13 @@ import App from './App.vue'
 import vuetify from './plugins/vuetify'
 import VueRouter from 'vue-router'
 import Vuetify from 'vuetify/lib'
+import { auth } from './plugins/firebase'
 
 import home from "./pages/home.vue"
 import login from "./pages/login.vue"
+import news from "./pages/news.vue"
+import perfil from "./pages/perfil.vue"
+
 
 Vue.use(VueRouter)
 Vue.config.productionTip = false
@@ -15,7 +19,18 @@ const router = new VueRouter({
   routes: [
     {path: "/", component: home}, 
     {path: "/login", component: login},
+    {path: "/news", component: news},
+    {path: "/perfil", component: perfil, meta:{requiresAuth: true},}
   ]
+})
+
+router.beforeEach((to,from,next) =>{
+  const requiresAuth = to.matched.some(x => x.meta.requiresAuth)
+  if (requiresAuth && !auth.currentUser){
+    next("/login")
+  } else{
+    next()
+  }
 })
 
 Vue.use(Vuetify)

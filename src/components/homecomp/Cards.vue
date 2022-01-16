@@ -3,7 +3,7 @@
         <v-row class="v-linha d-flex flex-nowrap ">
             <v-col class="pl-16">
                 <v-card class="d-flex pa-2 mx-6 lol rounded " min-width="201.60" max-width="fit-content" max-height="41" outlined tile dark >
-                <a class="linkJogos" @click="$vuetify.goTo('#lol', easeOutCubic)">
+                <a class="linkJogos" @click="$vuetify.goTo('#lol')">
                     <v-img max-width="25" src="@/assets/images/cardLOL.jpg" class="mr-2"></v-img>
                     <div class="">League of Legends</div>
                 </a>
@@ -11,7 +11,7 @@
             </v-col>
             <v-col class="px-0">
                 <v-card class="d-flex pa-2 mx-6 valorant rounded" max-width="fit-content" min-width="139" max-height="41" outlined tile dark>
-                <a class="linkJogos" @click="$vuetify.goTo('#valorant', easeOutCubic)">
+                <a class="linkJogos" @click="$vuetify.goTo('#valorant')">
                     <v-img max-width="25" src="@/assets/images/cardVAVA.png" class="mr-2"></v-img>
                     <div class="">VALORANT</div>
                 </a>
@@ -19,7 +19,7 @@
             </v-col>
             <v-col class="px-0">
                 <v-card class="d-flex pa-2 mx-6 wild-rift rounded" max-width="fit-content" min-width="118" max-height="41"  outlined tile dark >
-                <a class="linkJogos" @click="$vuetify.goTo('#wr', easeOutCubic)">
+                <a class="linkJogos" @click="$vuetify.goTo('#wr')">
                     <v-img max-width="25" src="@/assets/images/cardWR.png" class="mr-2"></v-img>
                     <div class="">Wild Rift</div>
                 </a>
@@ -27,7 +27,7 @@
             </v-col>
             <v-col class="px-0">
                 <v-card class="d-flex pa-2 mx-6 tft rounded" max-width="fit-content" min-width="182.5" max-height="41"  outlined tile dark >
-                <a class="linkJogos" @click="$vuetify.goTo('#tft', easeOutCubic)">
+                <a class="linkJogos" @click="$vuetify.goTo('#tft')">
                     <v-img max-width="25" src="@/assets/images/cardTFT.jpeg" class="mr-2"></v-img>
                     <div class="">Teamfight Tatics</div>
                 </a>

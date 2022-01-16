@@ -2,6 +2,12 @@
   <div>
     <v-app-bar app absolute dark max-height="64">
         <v-app-bar-nav-icon class="mobile-feature" @click="sidebar = !sidebar" large></v-app-bar-nav-icon>
+        <h1>Ganf News</h1>
+        <h2 v-for="text of textsHeader" :key="text.title" class="textoHeader mx-5" >
+          <router-link link :to="text.to" class="text-decoration-none white--text">
+            {{text.title}}
+          </router-link>
+        </h2>
         <v-spacer></v-spacer>
         <v-icon large class="perfil-icone">mdi-account</v-icon>
       </v-app-bar>
@@ -14,28 +20,18 @@
             </v-list-item>
         </v-list>
         <v-list>
-          <v-list-item>
+          <v-list-item v-for="item of itensLista" :key="item.title" link >
               <v-list-item-icon>
-                  <v-icon>mdi-account</v-icon>
+                  <v-icon>{{item.icon}}</v-icon>
               </v-list-item-icon>
               <v-list-item-content>
-                  Perfil
+                <router-link :to="item.to" class="text-decoration-none white--text">
+                  {{item.title}}
+                </router-link>
               </v-list-item-content>
           </v-list-item>
           <v-divider></v-divider>
-          <v-list-item>
-              <v-list-item-icon>
-                  <v-icon>mdi-home</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>Home</v-list-item-content>
-          </v-list-item>
-          <v-divider></v-divider>
-          <v-list-item>
-              <v-list-item-icon>
-                  <v-icon>mdi-newspaper-variant-multiple-outline</v-icon>
-              </v-list-item-icon>
-              <v-list-item-content>Notícias</v-list-item-content>
-          </v-list-item>
+
         </v-list>
       </v-navigation-drawer>
   </div>
@@ -47,6 +43,16 @@ export default {
     data(){
       return{
           sidebar: false,
+          textsHeader: [
+            {title:"Home", to:"/"},
+            {title:"Notícias", to:"/news"},
+            {title:"Perfil", to:"/perfil"}
+          ],
+          itensLista: [
+            {title:"Home", icon:"mdi-home",to:"/"},
+            {title:"Perfil", icon:"mdi-account",to:"/perfil"},
+            {title:"Notícias", icon:"mdi-newspaper-variant-multiple-outline",to:"/news"}
+          ]
       }
   }
 }
@@ -62,6 +68,9 @@ export default {
     display: inline-block;
   }
   .perfil-icone{
+    display: none;
+  }
+  .textoHeader{
     display: none;
   }
 }
