@@ -76,7 +76,7 @@
             <v-hover v-slot="{ hover }">
               <v-card
                 class="noticia-chamada"
-                
+                @click="teste"
                 :class="{ 'on-hover': hover }"
               >
                 <v-img
@@ -166,8 +166,10 @@ export default {
             imgChamada: doc.data().imgChamada,
           })
         }
-        console.log(this.noticias)
-    }
+    },
+    teste(){
+    this.$router.push({path:"news/noticia"})
+   },
   },
 };
 </script>
@@ -178,6 +180,7 @@ export default {
 }
 .v-card {
   transition: opacity .4s ease-in-out;
+  cursor: pointer;
 }
 
 .noticia-chamada:not(.on-hover) {

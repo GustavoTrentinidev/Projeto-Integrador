@@ -9,7 +9,7 @@ import home from "./pages/home.vue"
 import login from "./pages/login.vue"
 import news from "./pages/news.vue"
 import perfil from "./pages/perfil.vue"
-
+import noticia from "./pages/noticiaTemplate.vue"
 
 Vue.use(VueRouter)
 Vue.config.productionTip = false
@@ -20,7 +20,8 @@ const router = new VueRouter({
     {path: "/", component: home}, 
     {path: "/login", component: login},
     {path: "/news", component: news},
-    {path: "/perfil", component: perfil, meta:{requiresAuth: true},}
+    {path: "/perfil", component: perfil, meta:{requiresAuth: true},},
+    {path: "/news/noticia", component: noticia, props:true}
   ]
 })
 
