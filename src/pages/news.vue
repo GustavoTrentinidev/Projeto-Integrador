@@ -160,7 +160,7 @@ export default {
         for(const doc of logNews.docs){
           this.noticias.push({
             id: doc.id,
-            data: new Date(),
+            data: doc.data().data,
             titulo: doc.data().titulo,
             corpo: doc.data().corpo,
             imgChamada: doc.data().imgChamada,
