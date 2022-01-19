@@ -54,6 +54,7 @@
             <v-divider></v-divider>
             <v-list-item>
               <v-list-item-content>
+                <span>{{dica}}</span>
                 <v-textarea
                   filled
                   auto-grow
@@ -71,7 +72,7 @@
         </v-card>
       </v-dialog>
     </v-row>
-
+    
     <v-container class="pa-4 text-center">
       <v-row class="fill-height" align="center" justify="center">
         <template v-for="noticia of noticias">
@@ -126,7 +127,7 @@ export default {
   data() {
     return {
       transparent: "rgba(255, 255, 255, 0)",
-
+      dica:"Para pular uma linha digite duas vezes <br>",
       imgChamada: "",
       dialog: false,
       newstitle: "",
@@ -173,7 +174,7 @@ export default {
     },
     abrirNoticia(noticia) {
       console.log(noticia);
-      this.$router.push({ path: "news/noticia", params: { noticia } });
+      this.$router.push({ name: "NoticiaInfo", params: { noticia } });
     },
   },
 };

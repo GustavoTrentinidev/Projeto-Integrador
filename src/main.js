@@ -21,7 +21,7 @@ const router = new VueRouter({
     {path: "/login", component: login},
     {path: "/news", component: news},
     {path: "/perfil", component: perfil, meta:{requiresAuth: true},},
-    {path: "/news/noticiaComp", component: noticiaComp, props: true}
+    {path: "/news/noticia", name: 'NoticiaInfo', component: noticiaComp, props: true}
   ]
 })
 
