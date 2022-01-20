@@ -1,5 +1,5 @@
 <template>
-    <div class="cards-jogos d-flex justify-center mt-4 mb-4">
+    <div class="cards-jogos d-flex justify-center mb-4">
         <v-row class="v-linha d-flex flex-nowrap ">
             <v-col class="pl-16">
                 <v-card class="d-flex pa-2 mx-6 lol rounded " min-width="201.60" max-width="fit-content" max-height="41" outlined tile dark >

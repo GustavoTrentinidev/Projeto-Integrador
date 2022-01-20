@@ -9,8 +9,9 @@
           hide-overlay
           transition="dialog-bottom-transition"
         >
-          <template v-slot:activator="{ on, attrs }">
+          <template v-if="tipo === 1" v-slot:activator="{ on, attrs }">
             <v-btn
+              id="btnNoticia"
               class="zindex"
               color="red darken-1"
               dark
@@ -75,7 +76,7 @@
       </v-row>
     </div>
     
-    <v-container class="pa-4 mt-4 text-center">
+    <v-container class="pa-4 mt-16 text-center">
       <v-row class="fill-height" align="center" justify="center">
         <template v-for="noticia of noticias">
           <v-col :key="noticia.id" cols="12" md="4">
@@ -136,18 +137,30 @@ export default {
       corpo: "",
       uid: "",
       noticias: [],
+      tipo:"",
+      botao: document.getElementById("btnNoticia"),
+      fotoNewsOwner:"",
+      nomeNewsOwner:"",
+      sobrenomeNewsOwner:"",
     };
   },
-  mounted() {
-    const waitLoading = setTimeout(this.lerNoticias(), 1000);
-    this.uid = firebase.auth.currentUser.uid;
-    waitLoading;
-    console.log(this.uid);
+  async mounted() {
+    this.lerNoticias()
+    this.uid = firebase.auth.currentUser.uid
+    const userProfile = await firebase.profileCollection.where("uid", "==", this.uid).get()
+    if(userProfile.docs.length > 0){
+      const perfil = userProfile.docs[0]
+      this.nomeNewsOwner = perfil.data().nome
+      this.sobrenomeNewsOwner = perfil.data().sobrenome
+      this.fotoNewsOwner = perfil.data().foto
+      this.tipo = perfil.data().tipo
+    }
+    console.log(this.tipo)
+    console.log(this.tipo === 1)
   },
   methods: {
     darTab() {
       this.corpo += "    ";
-      console.log(this.uid);
     },
     async enviarNoticia() {
       await firebase.newsCollection.add({
@@ -175,7 +188,7 @@ export default {
       }
     },
     abrirNoticia(noticia) {
-      console.log(noticia);
+      //console.log(noticia);
       this.$router.push({ name: "NoticiaInfo", params: { noticia } });
     },
   },

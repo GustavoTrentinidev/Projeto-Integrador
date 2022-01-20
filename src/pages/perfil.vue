@@ -12,6 +12,7 @@
           <v-text-field label="Foto de perfil (link)" v-model="foto" color="red" dark></v-text-field>
           <v-btn class="red darken-1" @click="salvarPerfil">Salvar</v-btn>
           <v-btn class="red darken-1 ml-2" @click="logOut">Sair</v-btn>
+          <span class="white--text">{{tipo}}</span>
         </v-container>
       </v-form>
     </v-container>
@@ -32,6 +33,7 @@ export default {
       foto:"",
       uid:"",
       temPerfil: false,
+      tipo:""
     }
   },
   async mounted(){
@@ -45,6 +47,7 @@ export default {
       this.nome = perfil.data().nome
       this.sobrenome = perfil.data().sobrenome
       this.foto = perfil.data().foto
+      this.tipo = perfil.data().tipo
     }
   },
   methods:{

@@ -8,8 +8,8 @@
                 <h1 class="white--text mt-10"><router-link to="/">Ganf News </router-link></h1>
                 <h2 class="white--text mt-10">Iniciar sessão</h2>
                 <v-form class="d-flex flex-column">
-                  <v-text-field dark label="Email" class="mt-10" outlined required v-model="user.email"></v-text-field>
-                  <v-text-field dark label="Senha" class="mt-n4" outlined v-model="user.password" :type="show ? 'text' : 'password'" :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'" @click:append="show = !show" ></v-text-field>
+                  <v-text-field dark label="Email" class="mt-10" outlined required v-model="user.email" @keydown.enter="login"></v-text-field>
+                  <v-text-field dark label="Senha" class="mt-n4" outlined v-model="user.password" :type="show ? 'text' : 'password'" :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'" @click:append="show = !show"  @keydown.enter="login" ></v-text-field>
                   <v-btn class="mx-auto" @click="errorLogin = true">
                     <v-img max-width="25" src="@/assets/images/googleLogin.png"></v-img>
                   </v-btn>
@@ -21,7 +21,7 @@
               <v-col sm="4" cols="1"></v-col>
             </v-row>
           </v-container>
-          <v-snackbar color="red" v-model="errorLogin" danger multiline timeout="2000">Usuário ou senha inválidos.</v-snackbar>
+          <v-snackbar color="red" v-model="errorLogin" danger timeout="2000">Usuário ou senha inválidos.</v-snackbar>
           
           <v-dialog v-model="novaConta" persistent max-width="300" dark> 
             <v-card>
@@ -93,5 +93,4 @@ export default {
   background-position: center;
   background-size: contain;
 }
-
 </style>
