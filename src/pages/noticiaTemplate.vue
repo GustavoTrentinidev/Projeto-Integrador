@@ -5,7 +5,7 @@
           <v-container class="titulo-noticia">
           <div class="d-flex justify-center flex-column" id="teste">
             <h1>{{noticia.titulo}}</h1>
-            <span>{{noticia.data.toDate()}}</span>
+            <span>{{noticia.data}}</span>
             <hr class="red">
             <v-container class="conteudo">
             <span v-html="noticia.corpo"></span>

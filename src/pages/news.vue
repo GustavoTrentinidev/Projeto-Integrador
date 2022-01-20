@@ -1,79 +1,81 @@
 <template>
   <v-app class="black">
     <Header />
-    <v-row justify="end" class="mt-4 mr-3" max-height="36">
-      <v-dialog
-        v-model="dialog"
-        fullscreen
-        hide-overlay
-        transition="dialog-bottom-transition"
-      >
-        <template v-slot:activator="{ on, attrs }">
-          <v-btn
-            class="zindex"
-            color="red darken-1"
-            dark
-            v-bind="attrs"
-            v-on="on"
-          >
-            Criar Notícia
-          </v-btn>
-        </template>
-        <v-card>
-          <v-toolbar dark>
-            <v-btn icon dark @click="dialog = false">
-              <v-icon>mdi-close</v-icon>
+    <div>
+      <v-row justify="end" class="mt-4 mr-3 height-ajust">
+        <v-dialog
+          v-model="dialog"
+          fullscreen
+          hide-overlay
+          transition="dialog-bottom-transition"
+        >
+          <template v-slot:activator="{ on, attrs }">
+            <v-btn
+              class="zindex"
+              color="red darken-1"
+              dark
+              v-bind="attrs"
+              v-on="on"
+            >
+              Criar Notícia
             </v-btn>
-            <v-toolbar-title>Escreva a notícia</v-toolbar-title>
-            <v-spacer></v-spacer>
-            <v-toolbar-items>
-              <v-btn dark text @click="enviarNoticia(), (dialog = false)">
-                Publicar
+          </template>
+          <v-card>
+            <v-toolbar dark>
+              <v-btn icon dark @click="dialog = false">
+                <v-icon>mdi-close</v-icon>
               </v-btn>
-            </v-toolbar-items>
-          </v-toolbar>
-          <v-list three-line subheader>
-            <v-list-item>
-              <v-list-item-content>
-                <v-text-field
-                  label="Link da imagem da chamada da notícia"
-                  color="red darken-1"
-                  v-model="imgChamada"
-                ></v-text-field>
-              </v-list-item-content>
-            </v-list-item>
-            <v-list-item>
-              <v-list-item-content>
-                <v-text-field
-                  label="Digite o título da notícia"
-                  color="red darken-1"
-                  v-model="newstitle"
-                ></v-text-field>
-              </v-list-item-content>
-            </v-list-item>
-            <v-divider></v-divider>
-            <v-list-item>
-              <v-list-item-content>
-                <span>{{dica}}</span>
-                <v-textarea
-                  filled
-                  auto-grow
-                  label="Digite o corpo da notícia"
-                  v-model="corpo"
-                  @keydown.tab.prevent="darTab"
-                  rows="10"
-                  row-height="30"
-                  shaped
-                  color="red darken-1"
-                ></v-textarea>
-              </v-list-item-content>
-            </v-list-item>
-          </v-list>
-        </v-card>
-      </v-dialog>
-    </v-row>
+              <v-toolbar-title>Escreva a notícia</v-toolbar-title>
+              <v-spacer></v-spacer>
+              <v-toolbar-items>
+                <v-btn dark text @click="enviarNoticia(), (dialog = false)">
+                  Publicar
+                </v-btn>
+              </v-toolbar-items>
+            </v-toolbar>
+            <v-list three-line subheader>
+              <v-list-item>
+                <v-list-item-content>
+                  <v-text-field
+                    label="Link da imagem da chamada da notícia"
+                    color="red darken-1"
+                    v-model="imgChamada"
+                  ></v-text-field>
+                </v-list-item-content>
+              </v-list-item>
+              <v-list-item>
+                <v-list-item-content>
+                  <v-text-field
+                    label="Digite o título da notícia"
+                    color="red darken-1"
+                    v-model="newstitle"
+                  ></v-text-field>
+                </v-list-item-content>
+              </v-list-item>
+              <v-divider></v-divider>
+              <v-list-item>
+                <v-list-item-content>
+                  <span>{{dica}}</span>
+                  <v-textarea
+                    filled
+                    auto-grow
+                    label="Digite o corpo da notícia"
+                    v-model="corpo"
+                    @keydown.tab.prevent="darTab"
+                    rows="10"
+                    row-height="30"
+                    shaped
+                    color="red darken-1"
+                  ></v-textarea>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+          </v-card>
+        </v-dialog>
+      </v-row>
+    </div>
     
-    <v-container class="pa-4 text-center">
+    <v-container class="pa-4 mt-4 text-center">
       <v-row class="fill-height" align="center" justify="center">
         <template v-for="noticia of noticias">
           <v-col :key="noticia.id" cols="12" md="4">
@@ -96,8 +98,8 @@
                       <div>
                         <p
                           class="ma-0 text-body-1 font-weight-bold font-italic text-left"
+                          v-html="noticia.corpo"
                         >
-                          {{ noticia.corpo }}
                         </p>
                         <p
                           class="text-caption font-weight-medium font-italic text-left"
@@ -165,7 +167,7 @@ export default {
       for (const doc of logNews.docs) {
         this.noticias.push({
           id: doc.id,
-          data: doc.data().data,
+          data: doc.data().data.toDate(),
           titulo: doc.data().titulo,
           corpo: doc.data().corpo,
           imgChamada: doc.data().imgChamada,

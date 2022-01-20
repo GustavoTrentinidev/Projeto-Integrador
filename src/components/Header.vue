@@ -2,7 +2,7 @@
   <div>
     <v-app-bar app absolute dark max-height="64">
         <v-app-bar-nav-icon class="mobile-feature" @click="sidebar = !sidebar" large></v-app-bar-nav-icon>
-        <h1>Ganf News</h1>
+        <v-img src="@/assets/images/ganf-logo.png" max-width="165"></v-img>
         <h2 v-for="text of textsHeader" :key="text.title" class="textoHeader mx-5" >
           <router-link link :to="text.to" class="text-decoration-none white--text">
             {{text.title}}
