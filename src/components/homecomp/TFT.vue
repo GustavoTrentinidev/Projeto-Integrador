@@ -11,7 +11,7 @@
             (texto)
           </h4>
           <div class="mt-3">
-            <v-btn class="orange darken-3" >Notícias</v-btn>
+            <v-btn class="orange darken-3" @click="goToNewsPage">Notícias</v-btn>
           </div>
         </v-container>
       </v-col>
@@ -20,7 +20,14 @@
 </template>
 
 <script>
-export default {};
+export default {
+    methods: {
+    goToNewsPage(){
+      const valor = "Teamfight Tatics"
+      this.$router.push({ name: "Noticias", params: {valor} });
+    }
+  }
+};
 </script>
 
 <style>

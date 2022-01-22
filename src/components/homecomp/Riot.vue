@@ -8,10 +8,12 @@
         <v-container class="riot-text text-center " fluid>
           <h1>Riot Games</h1>
           <h4>
-            (texto(fiz um bem merda de teste, ta em algum lugar salvo qualquer coisa)
+            Riot Games é a empresa responsável pela criação dos jogos League of Legends,
+            VALORANT, Teamfight Tatics, Wild Rift, Legends of Runeterra, entre
+            outros jogos e também da série Arcane, juntamente com a Netflix.
           </h4>
           <div class="mt-3">
-            <v-btn class="red darken-1" >Notícias</v-btn>
+            <v-btn class="red darken-1" @click="goToNewsPage" >Notícias</v-btn>
           </div>
         </v-container>
       </v-col>
@@ -20,7 +22,15 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    goToNewsPage(){
+      const valor = "Riot"
+      this.$router.push({ name: "Noticias", params: {valor} });
+    }
+  }
+
+};
 </script>
 
 <style>

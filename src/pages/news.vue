@@ -45,6 +45,14 @@
                 </v-list-item-content>
               </v-list-item>
               <v-list-item>
+                  <v-select
+                    v-model="selectModal"
+                    :items="items"
+                    filled
+                    label="Tema da notícia"
+                  ></v-select>
+              </v-list-item>
+              <v-list-item>
                 <v-list-item-content>
                   <v-text-field
                     label="Digite o título da notícia"
@@ -75,14 +83,25 @@
         </v-dialog>
       </v-row>
     </div>
-    
-    <v-container class="pa-4 mt-16 text-center">
+    <div>
+    <v-select
+      class="mt-14 mx-4"
+      max-width="300"
+      dark
+      v-model="selectTopic"
+      :items="itemsTopic"
+      filled
+      label="Filtrar por tópico"
+    ></v-select>
+    </div>
+
+    <v-container class="pa-4 mt-2 text-center">
       <v-row class="fill-height" align="center" justify="center">
         <template v-for="noticia of noticias">
-          <v-col :key="noticia.id" cols="12" md="4">
+          <v-col :key="noticia.id" cols="12" md="4" v-if="noticia.topico == selectTopic || selectTopic == 'Todos'">
             <v-hover v-slot="{ hover }">
               <v-card
-                class="noticia-chamada"
+                class="noticia-chamada black"
                 @click="abrirNoticia(noticia)"
                 :class="{ 'on-hover': hover }"
               >
@@ -92,25 +111,27 @@
                       class="fill-height flex-column"
                       justify="space-between"
                     >
-                      <p class="mt-4 subheading text-left">
+                      <!-- <p class="mt-4 subheading text-left">
                         {{ noticia.titulo }}
-                      </p>
+                      </p> -->
 
                       <div>
                         <p
                           class="ma-0 text-body-1 font-weight-bold font-italic text-left"
-                          v-html="noticia.corpo"
                         >
+                          {{noticia.topico}}
                         </p>
-                        <p
+                        <!-- <p
                           class="text-caption font-weight-medium font-italic text-left"
                         >
                           {{ noticia.data }}
-                        </p>
+                        </p> -->
                       </div>
                     </v-row>
+                    
                   </v-card-title>
                 </v-img>
+                <p class="mt-4 subheading text-left white--text black">{{ noticia.titulo }}</p>
               </v-card>
             </v-hover>
           </v-col>
@@ -124,6 +145,7 @@
 import Header from "@/components/Header.vue";
 import * as firebase from "@/plugins/firebase.js";
 export default {
+  props: ['valor'],
   components: {
     Header,
   },
@@ -138,25 +160,24 @@ export default {
       uid: "",
       noticias: [],
       tipo:"",
-      botao: document.getElementById("btnNoticia"),
-      fotoNewsOwner:"",
-      nomeNewsOwner:"",
-      sobrenomeNewsOwner:"",
+      selectModal: '',
+      selectTopic: this.valor,
+      items: ['Riot', 'Teamfight Tatics', 'Wild Rift', 'League of Legends',"Valorant"],
+      itemsTopic: ['Todos','Riot', 'Teamfight Tatics', 'Wild Rift', 'League of Legends',"Valorant"]
     };
   },
-  async mounted() {
+  async created(){
+    this.tipo = 1
     this.lerNoticias()
     this.uid = firebase.auth.currentUser.uid
     const userProfile = await firebase.profileCollection.where("uid", "==", this.uid).get()
     if(userProfile.docs.length > 0){
       const perfil = userProfile.docs[0]
-      this.nomeNewsOwner = perfil.data().nome
-      this.sobrenomeNewsOwner = perfil.data().sobrenome
-      this.fotoNewsOwner = perfil.data().foto
       this.tipo = perfil.data().tipo
     }
-    console.log(this.tipo)
-    console.log(this.tipo === 1)
+    if(this.valor == undefined){
+      this.selectTopic = 'Todos'
+    }
   },
   methods: {
     darTab() {
@@ -169,6 +190,7 @@ export default {
         titulo: this.newstitle,
         data: new Date(),
         imgChamada: this.imgChamada,
+        topico: this.selectModal
       });
       this.newstitle = "";
       this.corpo = "";
@@ -184,6 +206,7 @@ export default {
           titulo: doc.data().titulo,
           corpo: doc.data().corpo,
           imgChamada: doc.data().imgChamada,
+          topico: doc.data().topico
         });
       }
     },
