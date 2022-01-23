@@ -10,7 +10,7 @@
                 <v-form class="d-flex flex-column">
                   <v-text-field dark label="Email" class="mt-10" outlined required v-model="user.email" @keydown.enter="login"></v-text-field>
                   <v-text-field dark label="Senha" class="mt-n4" outlined v-model="user.password" :type="show ? 'text' : 'password'" :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'" @click:append="show = !show"  @keydown.enter="login" ></v-text-field>
-                  <v-btn class="mx-auto" @click="errorLogin = true">
+                  <v-btn class="mx-auto" @click="loginGoogle">
                     <v-img max-width="25" src="@/assets/images/googleLogin.png"></v-img>
                   </v-btn>
                   <v-btn class="mx-auto mt-5" @click="login">
@@ -81,6 +81,10 @@ export default {
       this.novaConta = false
       await firebase.auth.createUserWithEmailAndPassword(this.user.email,this.user.password)
       this.login()
+    },
+    async loginGoogle(){
+      await firebase.auth.signInWithPopup(firebase.googleProvider)
+      this.$router.push({path:"/"})
     }
   }
 

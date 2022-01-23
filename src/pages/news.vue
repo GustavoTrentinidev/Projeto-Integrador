@@ -9,7 +9,7 @@
           hide-overlay
           transition="dialog-bottom-transition"
         >
-          <template v-if="tipo === 1" v-slot:activator="{ on, attrs }">
+          <template v-if="tipo === 1 && usuario !== null" v-slot:activator="{ on, attrs }">
             <v-btn
               id="btnNoticia"
               class="zindex"
@@ -163,19 +163,24 @@ export default {
       selectModal: '',
       selectTopic: this.valor,
       items: ['Riot', 'Teamfight Tatics', 'Wild Rift', 'League of Legends',"Valorant"],
-      itemsTopic: ['Todos','Riot', 'Teamfight Tatics', 'Wild Rift', 'League of Legends',"Valorant"]
+      itemsTopic: ['Todos','Riot', 'Teamfight Tatics', 'Wild Rift', 'League of Legends',"Valorant"],
+      usuario: "",
     };
   },
   async created(){
     this.tipo = 1
+    this.usuario = firebase.auth.currentUser
     this.lerNoticias()
-    this.uid = firebase.auth.currentUser.uid
-    const userProfile = await firebase.profileCollection.where("uid", "==", this.uid).get()
-    if(userProfile.docs.length > 0){
-      const perfil = userProfile.docs[0]
-      this.tipo = perfil.data().tipo
+    if(firebase.auth.currentUser != null){
+      this.uid = firebase.auth.currentUser.uid
+      const userProfile = await firebase.profileCollection.where("uid", "==", this.uid).get()
+      if(userProfile.docs.length > 0){
+        const perfil = userProfile.docs[0]
+        this.tipo = perfil.data().tipo
+      }
+
     }
-    if(this.valor == undefined){
+    if(this.valor == undefined || this.valor == null){
       this.selectTopic = 'Todos'
     }
   },

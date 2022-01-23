@@ -36,7 +36,6 @@ export default {
   },
   async mounted(){
     this.uid = firebase.auth.currentUser.uid
-    console.log(this.uid)
     const userProfile = await firebase.profileCollection.where("uid", "==", this.uid).get()
     if(userProfile.docs.length > 0){
       this.temPerfil = true
@@ -68,8 +67,13 @@ export default {
       }
     },
     
-    logOut(){
-      this.$router.push({path:"/"})
+    async logOut(){
+      try{
+        await firebase.auth.signOut()
+        this.$router.push({path:"/"})
+      }catch(error){
+        console.log(error)
+      }
     }
 
   }

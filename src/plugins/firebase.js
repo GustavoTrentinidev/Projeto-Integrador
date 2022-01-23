@@ -17,7 +17,8 @@ const database = firebase.firestore()
 const auth = firebase.auth()
 const profileCollection = database.collection("profile")
 const newsCollection = database.collection("news")
+const googleProvider = new firebase.auth.GoogleAuthProvider()
 
 export{
-    database, auth, profileCollection, newsCollection
+    database, auth, profileCollection, newsCollection, googleProvider
 }

@@ -1,15 +1,13 @@
 <template>
   <div>
-    <v-app-bar app absolute dark max-height="64">
+    <v-app-bar app absolute dark max-height="64" class="bricks">
         <v-app-bar-nav-icon class="mobile-feature" @click="sidebar = !sidebar" large></v-app-bar-nav-icon>
-        <v-img src="@/assets/images/ganf-logo.png" max-width="165"></v-img>
+        <v-img src="@/assets/images/ganf-gif.gif" max-width="165"></v-img>
         <h2 v-for="text of textsHeader" :key="text.title" class="textoHeader mx-5" >
           <router-link link :to="text.to" class="text-decoration-none white--text">
             {{text.title}}
           </router-link>
         </h2>
-        <v-spacer></v-spacer>
-        <v-icon large class="perfil-icone">mdi-account</v-icon>
       </v-app-bar>
         <v-navigation-drawer app dark v-model="sidebar">
         <v-list dense dark color="#272727">
@@ -62,6 +60,9 @@ export default {
 <style scoped>
 .mobile-feature{
   display: none;
+}
+.bricks{
+  background: url("../assets/images/bricks.png")
 }
 @media screen and (max-width:600px){
   .mobile-feature{
