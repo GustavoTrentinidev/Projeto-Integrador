@@ -94,8 +94,8 @@ export default {
 <style>
 .main{
   /* background: url("../assets/images/bgLogin.jpg"); */
-  background: url("../assets/images/ganf-gif-1920x1080.gif");
-  background-position: center;
+  background: url("../assets/images/ganf-gif-1920x1080.gif") center ;
+  background-size: 100% 100%;
 }
 .bricks{
   background: url("../assets/images/bricks.png");
@@ -103,15 +103,13 @@ export default {
 @media screen and (max-width:1366px) {
   .main{
     /* background: url("../assets/images/bgLogin.jpg"); */
-    background: url("../assets/images/ganf-gif-pc.gif");
-    background-position: center;
+    background: url("../assets/images/ganf-gif-pc.gif") center;
   }
 }
 @media screen and (max-width:600px) {
   .main{
     /* background: url("../assets/images/bgLogin.jpg"); */
-    background: url("../assets/images/ganf-gif-mobile.gif");
-    background-position: center;
+    background: url("../assets/images/ganf-gif-mobile.gif") center;
     background-size: contain;
   }
 }

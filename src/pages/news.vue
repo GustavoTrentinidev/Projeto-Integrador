@@ -217,7 +217,7 @@ export default {
     },
     abrirNoticia(noticia) {
       //console.log(noticia);
-      this.$router.push({ name: "NoticiaInfo", params: { noticia } });
+      this.$router.push({ name: "NoticiaInfo", params: { noticia, id: noticia.id }});
     },
   },
 };
