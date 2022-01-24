@@ -9,8 +9,8 @@
           <h1>Riot Games</h1>
           <h4>
             Riot Games é a empresa responsável pela criação dos jogos League of Legends,
-            VALORANT, Teamfight Tatics, Wild Rift, Legends of Runeterra, entre
-            outros jogos e também da série Arcane, juntamente com a Netflix.
+            VALORANT, Teamfight Tatics, Wild Rift, entre outros. E também vem apostando
+            em outras áreas, como a música, com o Riot Games Music e a televisão, com a série da Arcane Netflix.
           </h4>
           <div class="mt-3">
             <v-btn class="red darken-1" @click="goToNewsPage" >Notícias</v-btn>

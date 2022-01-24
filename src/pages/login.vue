@@ -4,8 +4,8 @@
           <v-container class="container fill-height">
             <v-row>
               <v-col sm="4" cols="1"></v-col>
-              <v-col class="black d-flex flex-column align-center ">                
-                <h1 class="white--text mt-10"><router-link to="/">Ganf News </router-link></h1>
+              <v-col class="black d-flex flex-column align-center">                
+                <router-link to="/"><v-img class="mt-10" src="../assets/images/ganf-gif.gif"></v-img></router-link>
                 <h2 class="white--text mt-10">Iniciar sessão</h2>
                 <v-form class="d-flex flex-column">
                   <v-text-field dark label="Email" class="mt-10" outlined required v-model="user.email" @keydown.enter="login"></v-text-field>
@@ -93,8 +93,26 @@ export default {
 
 <style>
 .main{
-  background: url("../assets/images/bgLogin.jpg");
+  /* background: url("../assets/images/bgLogin.jpg"); */
+  background: url("../assets/images/ganf-gif-1920x1080.gif");
   background-position: center;
-  background-size: contain;
+}
+.bricks{
+  background: url("../assets/images/bricks.png");
+}
+@media screen and (max-width:1366px) {
+  .main{
+    /* background: url("../assets/images/bgLogin.jpg"); */
+    background: url("../assets/images/ganf-gif-pc.gif");
+    background-position: center;
+  }
+}
+@media screen and (max-width:600px) {
+  .main{
+    /* background: url("../assets/images/bgLogin.jpg"); */
+    background: url("../assets/images/ganf-gif-mobile.gif");
+    background-position: center;
+    background-size: contain;
+  }
 }
 </style>
