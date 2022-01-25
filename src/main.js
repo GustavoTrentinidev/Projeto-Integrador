@@ -22,7 +22,10 @@ const router = new VueRouter({
     {path: "/news", name: "Noticias", component: news, props: true},
     {path: "/perfil", component: perfil, meta:{requiresAuth: true},},
     {path: `/news/noticia/:id`, name: 'NoticiaInfo', component: noticiaComp, props: true}
-  ]
+  ],
+  scrollBehavior () {
+    return { x: 0, y: 0 }
+  }  
 })
 
 router.beforeEach((to,from,next) =>{
