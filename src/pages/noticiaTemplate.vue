@@ -3,7 +3,7 @@
         <Header/>
         <v-main>
           <v-container class="titulo-noticia">
-          <div class="d-flex justify-center flex-column" id="teste" v-if="noticia">
+          <div class="d-flex justify-center flex-column" v-if="noticia">
             <h1>{{noticia.titulo}}</h1>
             <span>{{noticia.data}}</span>
             <hr class="red">
@@ -12,7 +12,7 @@
             <v-img :src="noticia.imgChamada"></v-img>
             </v-container>
           </div>
-          <div class="d-flex justify-center flex-column" id="teste" v-else>
+          <div class="d-flex justify-center flex-column" v-else>
             <h1>{{noticia1.titulo}}</h1>
             <span>{{noticia1.data.toDate()}}</span>
             <hr class="red">
