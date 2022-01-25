@@ -9,7 +9,7 @@
           hide-overlay
           transition="dialog-bottom-transition"
         >
-          <template v-if="tipo === 1 && usuario !== null" v-slot:activator="{ on, attrs }">
+          <template v-if="tipo === 1 && usuario !== null && userperfil" v-slot:activator="{ on, attrs }">
             <v-btn
               id="btnNoticia"
               class="zindex"
@@ -165,10 +165,13 @@ export default {
       items: ['Riot', 'Teamfight Tatics', 'Wild Rift', 'League of Legends',"Valorant"],
       itemsTopic: ['Todos','Riot', 'Teamfight Tatics', 'Wild Rift', 'League of Legends',"Valorant"],
       usuario: "",
+      userperfil: "",
     };
   },
   async created(){
     this.tipo = 1
+    this.userperfil = true
+    
     this.usuario = firebase.auth.currentUser
     this.lerNoticias()
     if(firebase.auth.currentUser != null){
@@ -177,8 +180,10 @@ export default {
       if(userProfile.docs.length > 0){
         const perfil = userProfile.docs[0]
         this.tipo = perfil.data().tipo
+        this.userperfil = true
+      } else{
+        this.userperfil = false
       }
-
     }
     if(this.valor == undefined || this.valor == null){
       this.selectTopic = 'Todos'
