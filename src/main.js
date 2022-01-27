@@ -17,11 +17,11 @@ Vue.config.productionTip = false
 const router = new VueRouter({
   mode: "hash",
   routes: [
-    {path: "/", component: home}, 
-    {path: "/login", component: login},
-    {path: "/news", name: "Noticias", component: news, props: true},
-    {path: "/perfil", component: perfil, meta:{requiresAuth: true},},
-    {path: `/news/noticia/:id`, name: 'NoticiaInfo', component: noticiaComp, props: true}
+    {path: "/", component: home, meta:{title:"Home | Ganf News"}}, 
+    {path: "/login", component: login, meta:{title: "Login | Ganf News"}},
+    {path: "/news", name: "Noticias", component: news, props: true, meta:{title: "Notícias | Ganf News"}},
+    {path: "/perfil", component: perfil, meta:{requiresAuth: true, title: "Perfil | Ganf News"},},
+    {path: `/news/noticia/:id`, name: 'NoticiaInfo', component: noticiaComp, props: true, meta:{title: "Notícia | Ganf News"}}
   ],
   scrollBehavior () {
     return { x: 0, y: 0 }
@@ -29,6 +29,10 @@ const router = new VueRouter({
 })
 
 router.beforeEach((to,from,next) =>{
+  Vue.nextTick(() => {
+    document.title = to.meta.title || "Ganf News";
+    
+  });
   const requiresAuth = to.matched.some(x => x.meta.requiresAuth)
   if (requiresAuth && !auth.currentUser){
     next("/login")
