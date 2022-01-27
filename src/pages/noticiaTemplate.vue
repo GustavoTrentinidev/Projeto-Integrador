@@ -40,7 +40,6 @@ export default {
       }
     },
     created() {
-      console.log(this.$route.params.id)
       if (this.noticia === undefined) {
         this.getNews()
       }
@@ -48,7 +47,6 @@ export default {
       async getNews() {
         await firebase.database.collection("news").doc(this.$route.params.id).get().then( (doc)=>{
           this.noticia1 = doc.data()
-          console.log(doc.data())
           });
       }
     }
