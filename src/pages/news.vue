@@ -23,13 +23,16 @@
           </template>
           <v-card>
             <v-toolbar dark>
-              <v-btn icon dark @click="dialog = false">
+              <v-btn icon dark @click="dialog = false, atualizando = false">
                 <v-icon>mdi-close</v-icon>
               </v-btn>
               <v-toolbar-title>Escreva a notícia</v-toolbar-title>
               <v-spacer></v-spacer>
               <v-toolbar-items>
-                <v-btn dark text @click="enviarNoticia(), (dialog = false)">
+                <v-btn v-if="atualizando" dark text @click="atualizarNoticia(), (dialog = false, atualizando = false)">
+                  Atualizar
+                </v-btn>
+                <v-btn v-else dark text @click="enviarNoticia(), (dialog = false, atualizando = false)">
                   Publicar
                 </v-btn>
               </v-toolbar-items>
@@ -114,10 +117,9 @@
                       <!-- <p class="mt-4 subheading text-left">
                         {{ noticia.titulo }}
                       </p> -->
-
-                      <div>
+                      <div class="d-flex justify-space-between">
                         <p
-                          class="ma-0 text-body-1 font-weight-bold font-italic text-left"
+                          class="ma-0 text-body-1 font-weight-bold font-italic text-left d-inline"
                         >
                           {{noticia.topico}}
                         </p>
@@ -126,9 +128,31 @@
                         >
                           {{ noticia.data }}
                         </p> -->
+                      <v-menu top right v-if="tipo === 1 && usuario !== null && userperfil">
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-btn
+                            dark
+                            icon
+                            v-bind="attrs"
+                            v-on="on"
+                          >
+                            <v-icon>mdi-dots-vertical</v-icon>
+                          </v-btn>
+                        </template>
+
+                        <v-list>
+                          <v-list-item
+                            v-for="(opcao, i) in opcoes"
+                            :key="i"
+                          >
+                            <v-list-item-title @click="opcao.funcao(noticia)">
+                                {{ opcao.what }}
+                            </v-list-item-title>
+                          </v-list-item>
+                        </v-list>
+                      </v-menu>
                       </div>
                     </v-row>
-                    
                   </v-card-title>
                 </v-img>
                 <p class="mt-4 subheading text-left white--text black">{{ noticia.titulo }}</p>
@@ -166,6 +190,9 @@ export default {
       itemsTopic: ['Todos','Riot', 'Teamfight Tatics', 'Wild Rift', 'League of Legends',"Valorant"],
       usuario: "",
       userperfil: "",
+      opcoes: [{what: 'Delete', funcao: this.deletar}, {what: 'Update', funcao: this.abrirAtualizar}],
+      atualizando: false,
+      idUpdate: '',
     };
   },
   async created(){
@@ -190,6 +217,32 @@ export default {
     }
   },
   methods: {
+    async deletar(noticia){
+      await firebase.newsCollection.doc(noticia.id).delete()
+      this.lerNoticias()
+    },
+    abrirAtualizar(noticia){
+      console.log(noticia)
+      this.dialog = true
+      this.atualizando = true
+      this.newstitle = noticia.titulo;
+      this.corpo = noticia.corpo;
+      this.imgChamada = noticia.imgChamada;
+      this.selectModal = noticia.topico
+      this.idUpdate = noticia.id
+    },
+    async atualizarNoticia(){
+      await firebase.newsCollection.doc(this.idUpdate).update({
+        corpo: this.corpo,
+        titulo: this.newstitle,
+        imgChamada: this.imgChamada,
+        topico: this.selectModal
+      });
+      this.newstitle = "";
+      this.corpo = "";
+      this.imgChamada = "";
+      this.lerNoticias();
+    },
     darTab() {
       this.corpo += "    ";
     },
@@ -209,6 +262,7 @@ export default {
     },
     async lerNoticias() {
       const logNews = await firebase.newsCollection.get();
+      this.noticias = []
       for (const doc of logNews.docs) {
         this.noticias.push({
           id: doc.id,

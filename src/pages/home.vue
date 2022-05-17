@@ -33,10 +33,6 @@ export default {
     Wild,
     TFT,
   },
-
-  data: () => ({
-    //
-  }),
 };
 </script>
 
