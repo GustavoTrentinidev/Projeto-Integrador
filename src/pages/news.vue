@@ -128,6 +128,8 @@
                         >
                           {{ noticia.data }}
                         </p> -->
+                        <div>
+
                       <v-menu top right v-if="tipo === 1 && usuario !== null && userperfil">
                         <template v-slot:activator="{ on, attrs }">
                           <v-btn
@@ -145,12 +147,21 @@
                             v-for="(opcao, i) in opcoes"
                             :key="i"
                           >
-                            <v-list-item-title @click="opcao.funcao(noticia)">
+                            <v-list-item-title @click="opcao.funcao(noticia)" style="cursor:pointer">
                                 {{ opcao.what }}
                             </v-list-item-title>
                           </v-list-item>
                         </v-list>
                       </v-menu>
+                      <v-btn icon>
+                        <v-icon v-if="curtidasUser.indexOf(noticia.id) != -1" style="color:red; opacity: 1" @click="curtir(noticia)">
+                          mdi-cards-heart
+                        </v-icon>
+                        <v-icon v-else style="color:white; opacity: 1" @click="curtir(noticia)">
+                          mdi-cards-heart-outline
+                        </v-icon>
+                      </v-btn>
+                        </div>
                       </div>
                     </v-row>
                   </v-card-title>
@@ -193,6 +204,8 @@ export default {
       opcoes: [{what: 'Delete', funcao: this.deletar}, {what: 'Update', funcao: this.abrirAtualizar}],
       atualizando: false,
       idUpdate: '',
+      curtidasUser: [],
+      userProfile: ''
     };
   },
   async created(){
@@ -216,7 +229,37 @@ export default {
       this.selectTopic = 'Todos'
     }
   },
+  mounted(){
+    this.lerCurtidas()
+  },
   methods: {
+    async lerCurtidas(){
+      // Arrumar: no reload da página ele não pega os dados corretamente.
+      const userProfile = await firebase.profileCollection.where("uid", "==", this.uid).get()
+      this.userProfile = userProfile
+      for(const i in userProfile.docs[0].data().curtidas){
+        this.curtidasUser.push(userProfile.docs[0].data().curtidas[i])
+      }
+    },
+    async curtir(noticia){
+      // Arrumar: quando curtir a notícia, não abrí-la também.
+      // console.log(this.curtidasUser.indexOf(noticia.id) != -1)
+      if (this.curtidasUser.indexOf(noticia.id) != -1){
+        const index = this.curtidasUser.indexOf(noticia.id)
+        this.curtidasUser.splice(index,1)
+        await firebase.profileCollection.doc(this.userProfile.docs[0].id).update({
+          curtidas: this.curtidasUser
+        })
+      } else{
+        this.curtidasUser.push(noticia.id)
+        await firebase.profileCollection.doc(this.userProfile.docs[0].id).update({
+          curtidas: this.curtidasUser
+        })
+      }
+      console.log(this.curtidasUser)
+      this.lerNoticias()
+    },
+
     async deletar(noticia){
       await firebase.newsCollection.doc(noticia.id).delete()
       this.lerNoticias()
