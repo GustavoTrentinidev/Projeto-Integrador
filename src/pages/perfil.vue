@@ -14,6 +14,8 @@
           <v-btn class="red darken-1 ml-2" @click="logOut">Sair</v-btn>
         </v-container>
       </v-form>
+      <h1 class="white--text">Notícias curtidas</h1>
+      <div v-for="noticia in curtidasUser" :key="noticia" class="white--text">{{noticia}}</div>
     </v-container>
   </v-app>
 </template>
@@ -32,11 +34,14 @@ export default {
       foto:"",
       uid:"",
       temPerfil: false,
+      userProfile: '',
+      curtidasUser: [],
     }
   },
   async mounted(){
     this.uid = firebase.auth.currentUser.uid
     const userProfile = await firebase.profileCollection.where("uid", "==", this.uid).get()
+    this.userProfile = userProfile
     if(userProfile.docs.length > 0){
       this.temPerfil = true
       const perfil = userProfile.docs[0]
@@ -46,8 +51,22 @@ export default {
       this.foto = perfil.data().foto
       this.tipo = perfil.data().tipo
     }
+    this.lerCurtidas()
+    
   },
   methods:{
+    async lerCurtidas(){
+      // Arrumar: no reload da página ele não pega os dados corretamente.
+      const userProfile = await firebase.profileCollection.where("uid", "==", this.uid).get()
+      this.userProfile = userProfile
+      for(const i in userProfile.docs[0].data().curtidas){
+        this.curtidasUser.push(userProfile.docs[0].data().curtidas[i])
+        const noticia = await firebase.newsCollection.doc(this.curtidasUser[i]).id
+        console.log(noticia)
+        //console.log(await firebase.newsCollection.doc(userProfile.docs[0].data().curtidas[i]).get())
+        //console.log(await firebase.newsCollection.get().docs.doc(userProfile.docs[0].data().curtidas[i]))
+     }
+    },
     async salvarPerfil(){
       if(this.temPerfil){
         //atualiza as informações
