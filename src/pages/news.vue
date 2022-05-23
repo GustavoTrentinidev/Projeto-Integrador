@@ -259,7 +259,6 @@ export default {
       console.log(this.curtidasUser)
       this.lerNoticias()
     },
-
     async deletar(noticia){
       await firebase.newsCollection.doc(noticia.id).delete()
       this.lerNoticias()
@@ -333,7 +332,6 @@ export default {
   transition: opacity 0.4s ease-in-out;
   cursor: pointer;
 }
-
 .noticia-chamada:not(.on-hover) {
   opacity: 0.6;
 }

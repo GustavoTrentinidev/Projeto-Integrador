@@ -56,14 +56,14 @@ export default {
   },
   methods:{
     async lerCurtidas(){
+      this.currentUser = []
       // Arrumar: no reload da página ele não pega os dados corretamente.
       const userProfile = await firebase.profileCollection.where("uid", "==", this.uid).get()
       this.userProfile = userProfile
       for(const i in userProfile.docs[0].data().curtidas){
-        this.curtidasUser.push(userProfile.docs[0].data().curtidas[i])
-        const noticia = await firebase.newsCollection.doc(this.curtidasUser[i]).id
-        console.log(noticia)
-        //console.log(await firebase.newsCollection.doc(userProfile.docs[0].data().curtidas[i]).get())
+        await firebase.newsCollection.doc(userProfile.docs[0].data().curtidas[i]).get().then(doc =>{
+          this.curtidasUser.push(doc.data())
+        })
         //console.log(await firebase.newsCollection.get().docs.doc(userProfile.docs[0].data().curtidas[i]))
      }
     },
