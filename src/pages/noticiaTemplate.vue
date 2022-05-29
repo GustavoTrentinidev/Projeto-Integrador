@@ -1,5 +1,5 @@
 <template>
-    <v-app class="black white--text">
+    <v-app class="transparent white--text" id="app">
         <Header/>
         <v-main>
           <v-container class="titulo-noticia">
@@ -55,6 +55,10 @@ export default {
 </script>
 
 <style>
+#app {
+    background: url("../assets/images/backGround.png") center center; 
+    background-size: cover;
+}
 .titulo-noticia{
   max-width: 940px;
 }

@@ -1,5 +1,5 @@
 <template>
-  <v-app class="black">
+  <v-app id="app">
     <Header />
     <div>
       <v-row justify="end" class="mt-4 mr-3 height-ajust">
@@ -104,7 +104,7 @@
           <v-col :key="noticia.id" cols="12" md="4" v-if="noticia.topico == selectTopic || selectTopic == 'Todos'">
             <v-hover v-slot="{ hover }">
               <v-card
-                class="noticia-chamada black"
+                class="noticia-chamada transparent"
                 @click="abrirNoticia(noticia)"
                 :class="{ 'on-hover': hover }"
               >
@@ -166,7 +166,7 @@
                     </v-row>
                   </v-card-title>
                 </v-img>
-                <p class="mt-4 subheading text-left white--text black">{{ noticia.titulo }}</p>
+                <p class="mt-4 subheading text-left white--text">{{ noticia.titulo }}</p>
               </v-card>
             </v-hover>
           </v-col>
@@ -243,7 +243,6 @@ export default {
     },
     async curtir(noticia){
       // Arrumar: quando curtir a notícia, não abrí-la também.
-      // console.log(this.curtidasUser.indexOf(noticia.id) != -1)
       if (this.curtidasUser.indexOf(noticia.id) != -1){
         const index = this.curtidasUser.indexOf(noticia.id)
         this.curtidasUser.splice(index,1)
@@ -325,14 +324,18 @@ export default {
 </script>
 
 <style>
+#app {
+    background: url("../assets/images/backGround.png") center center; 
+    background-size: cover;
+}
 .zindex {
   z-index: 1;
 }
 .v-card {
-  transition: opacity 0.4s ease-in-out;
+  transition: filter 0.3s ease-in-out;
   cursor: pointer;
 }
 .noticia-chamada:not(.on-hover) {
-  opacity: 0.6;
+  filter: brightness(0.4);
 }
 </style>

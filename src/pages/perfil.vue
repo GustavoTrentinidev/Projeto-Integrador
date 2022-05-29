@@ -15,7 +15,54 @@
         </v-container>
       </v-form>
       <h1 class="white--text">Notícias curtidas</h1>
-      <div v-for="noticia in curtidasUser" :key="noticia" class="white--text">{{noticia}}</div>
+      <v-container class="pa-4 mt-2 text-center">
+      <v-row class="fill-height">
+        <template v-for="noticia of curtidasUser">
+          <v-col :key="noticia.id" cols="12" md="4">
+            <v-hover v-slot="{ hover }">
+              <v-card
+                class="noticia-chamada transparent"
+                @click="abrirNoticia(noticia)"
+                :class="{ 'on-hover': hover }"
+              >
+                <v-img :src="noticia.imgChamada" height="225px">
+                  <v-card-title class="text-h6 white--text">
+                    <v-row
+                      class="fill-height flex-column"
+                      justify="space-between"
+                    >
+                      <!-- <p class="mt-4 subheading text-left">
+                        {{ noticia.titulo }}
+                      </p> -->
+                      <div class="d-flex justify-space-between">
+                        <p
+                          class="ma-0 text-body-1 font-weight-bold font-italic text-left d-inline"
+                        >
+                          {{noticia.topico}}
+                        </p>
+                        <!-- <p
+                          class="text-caption font-weight-medium font-italic text-left"
+                        >
+                          {{ noticia.data }}
+                        </p> -->
+                        <div>
+                      <v-btn icon>
+                        <v-icon style="color:red; opacity: 1" @click="descurtir(noticia)">
+                          mdi-cards-heart
+                        </v-icon>
+                      </v-btn>
+                        </div>
+                      </div>
+                    </v-row>
+                  </v-card-title>
+                </v-img>
+                <p class="mt-4 subheading text-left white--text">{{ noticia.titulo }}</p>
+              </v-card>
+            </v-hover>
+          </v-col>
+        </template>
+      </v-row>
+    </v-container>
     </v-container>
   </v-app>
 </template>
@@ -36,6 +83,7 @@ export default {
       temPerfil: false,
       userProfile: '',
       curtidasUser: [],
+      listaCurtidasDescurtir: [],
     }
   },
   async mounted(){
@@ -55,14 +103,23 @@ export default {
     
   },
   methods:{
+    async descurtir(noticia){
+      const index = this.curtidasUser.indexOf(noticia)
+      this.curtidasUser.splice(index,1)
+      this.listaCurtidasDescurtir.splice(index,1)
+      await firebase.profileCollection.doc(this.userProfile.docs[0].id).update({
+            curtidas: this.listaCurtidasDescurtir
+        })
+    },
     async lerCurtidas(){
-      this.currentUser = []
+      this.curtidasUser = []
       // Arrumar: no reload da página ele não pega os dados corretamente.
       const userProfile = await firebase.profileCollection.where("uid", "==", this.uid).get()
       this.userProfile = userProfile
       for(const i in userProfile.docs[0].data().curtidas){
         await firebase.newsCollection.doc(userProfile.docs[0].data().curtidas[i]).get().then(doc =>{
           this.curtidasUser.push(doc.data())
+          this.listaCurtidasDescurtir.push(doc.id)
         })
         //console.log(await firebase.newsCollection.get().docs.doc(userProfile.docs[0].data().curtidas[i]))
      }
@@ -93,8 +150,12 @@ export default {
       }catch(error){
         console.log(error)
       }
-    }
+    },
 
+    abrirNoticia(noticia) {
+      //console.log(noticia);
+      this.$router.push({ name: "NoticiaInfo", params: { noticia, id: noticia.id }});
+    },
   }
 }
 </script>
