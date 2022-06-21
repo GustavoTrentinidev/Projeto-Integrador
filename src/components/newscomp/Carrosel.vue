@@ -4,10 +4,10 @@
           <v-icon>mdi-arrow-left-box</v-icon>
       </v-btn>
         <div class="divCarrosel imgEsquerda" id="espaço2">
-            <v-img :src="noticias[noticias.length + (-i -1)].imgChamada" @click="passCarrossel(-1)"></v-img>
+            <v-img :src="noticias[noticias.length + -i -1].imgChamada" @click="passCarrossel(-1)"></v-img>
         </div>
         <div class="divCarrosel imgCentral ml-n16 mr-n16 mt-n6" id="espaço1">
-            <v-img :src="noticias[i + 1].imgChamada"></v-img>
+            <v-img :src="noticias[i].imgChamada"></v-img>
         </div>
         <div class="divCarrosel imgDireita" id="espaço3">
             <v-img :src="noticias[i + 2].imgChamada" @click="passCarrossel(1)"></v-img>
@@ -33,13 +33,19 @@ export default {
     methods: {
         passCarrossel(valor){
             this.i += valor
+            // console.log(this.noticias[this.noticias.length - (-this.i -1)])
             console.log(this.i)
-            if (valor == -1){
-                if(this.i < 0){console.log('oi')
+            if (valor == 1){
+                if (this.i > 6){
+                    this.i = 0
                 }
-
             }
-            console.log(this.noticias[this.noticias.length -this.i -1])
+            if (valor == -1){
+                if(this.i < -(this.noticias.length-1)){
+                    this.i = 0
+                }
+            }
+            // console.log(this.noticias[this.noticias.length -this.i -1])
         },
         async lerNoticias(){
             const logNews = await firebase.newsCollection.get()
