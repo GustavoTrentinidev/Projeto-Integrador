@@ -86,6 +86,7 @@
         </v-dialog>
       </v-row>
     </div>
+    <Carrosel/>
     <div>
     <v-select
       class="mt-14 mx-4"
@@ -179,10 +180,12 @@
 <script>
 import Header from "@/components/Header.vue";
 import * as firebase from "@/plugins/firebase.js";
+import Carrosel from "@/components/newscomp/Carrosel.vue"
 export default {
   props: ['valor'],
   components: {
     Header,
+    Carrosel,
   },
   data() {
     return {
